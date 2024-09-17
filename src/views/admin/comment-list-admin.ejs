@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin - Product Management</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f0f8ff; /* Light blue background */
+      }
+      header {
+        background-color: #1e90ff; /* Dodger blue */
+        color: white;
+        padding: 1em;
+        text-align: center;
+      }
+      nav a {
+        color: white;
+        margin: 0 1em;
+        text-decoration: none;
+      }
+      main {
+        padding: 1em;
+      }
+      h2 {
+        color: #1e90ff; /* Dodger blue */
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 1em;
+      }
+      table,
+      th,
+      td {
+        border: 1px solid #1e90ff; /* Dodger blue */
+      }
+      th,
+      td {
+        padding: 0.5em;
+        text-align: left;
+      }
+      th {
+        background-color: #1e90ff; /* Dodger blue */
+        color: white;
+      }
+      tr:nth-child(even) {
+        background-color: #e6f7ff; /* Light blue for even rows */
+      }
+      .btn {
+        border: none;
+        padding: 0.5em 1em;
+        cursor: pointer;
+        color: white;
+      }
+      .btn-add {
+        background-color: #1e90ff; /* Dodger blue */
+        float: right;
+        margin-bottom: 1em;
+      }
+      .btn-add:hover {
+        background-color: #1c86ee; /* Slightly darker blue */
+      }
+      .btn-edit {
+        background-color: #32cd32; /* Lime green */
+      }
+      .btn-edit:hover {
+        background-color: #2eb82e; /* Slightly darker green */
+      }
+      .btn-delete {
+        background-color: #ff4500; /* Orange red */
+      }
+      .btn-delete:hover {
+        background-color: #e03e00; /* Slightly darker red */
+      }
+    </style>
+  </head>
+  <body>
+    <%- include('layout/header-admin') -%>
+    <main>
+      <section id="admin">
+        <h2>Comment List</h2>
+        <button class="btn btn-add">Add New</button>
+        <table>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Price</th>
+              <th>Description</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Product 1</td>
+              <td>$100</td>
+              <td>Description for product 1</td>
+              <td>
+                <button class="btn btn-edit">Edit</button>
+                <button class="btn btn-delete">Delete</button>
+              </td>
+            </tr>
+            <tr>
+              <td>Product 2</td>
+              <td>$200</td>
+              <td>Description for product 2</td>
+              <td>
+                <button class="btn btn-edit">Edit</button>
+                <button class="btn btn-delete">Delete</button>
+              </td>
+            </tr>
+            <!-- Add more product rows as needed -->
+          </tbody>
+        </table>
+      </section>
+    </main>
+    <%- include('layout/footer-admin') -%>
+  </body>
+</html>

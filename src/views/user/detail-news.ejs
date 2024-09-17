@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>News Website</title>
+    <link rel="stylesheet" href="style/user/detail.css" />
+  </head>
+  <body>
+    <%- include('layout/header-user') -%>
+    <main>
+      <div class="container">
+        <section class="news-detail">
+          <img src="images/<%= newsResult.image %>" alt="News Image"/>
+          <h2><%= newsResult.title %></h2>
+          <div class="meta">
+            <span>By Author PandaNews</span> |
+            <span><%= formatDateTime(newsResult.dateCreate) %></span>
+          </div>
+          <div class="content"><%= newsResult.content %></div>
+        </section>
+        <section class="comments-section">
+          <h3>Bình luận</h3>
+          <div class="comment">
+            <div class="comment-meta">
+              <span>Nguyễn Văn A</span> | <span>September 16, 2024</span>
+            </div>
+            <div class="comment-content">
+              <p>Bài viết rất hay và bổ ích!</p>
+            </div>
+          </div>
+          <div class="comment">
+            <div class="comment-meta">
+              <span>Trần Thị B</span> | <span>September 16, 2024</span>
+            </div>
+            <div class="comment-content">
+              <p>Cảm ơn tác giả vì bài viết chi tiết.</p>
+            </div>
+          </div>
+          <div class="comment-form">
+            <textarea
+              rows="4"
+              placeholder="Viết bình luận của bạn..."
+            ></textarea>
+            <button type="submit">Gửi</button>
+          </div>
+        </section>
+      </div>
+    </main>
+    <%- include('layout/footer-user') -%>
+  </body>
+</html>
