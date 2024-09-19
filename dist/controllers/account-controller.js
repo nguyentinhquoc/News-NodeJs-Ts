@@ -23,7 +23,7 @@ function loginGet(req, res) {
 }
 function loginPost(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
-        if (yield (0, user_services_1.checkDataLogin)([{ username: req.body.username }, { password: req.body.password }])) {
+        if (yield (0, user_services_1.checkDataLogin)([{ username: req.body.username }, { password: req.body.password }, { status: 1 }])) {
             let token = (0, Authentication_1.createToken)({ username: req.body.username });
             res.cookie('token', token, { maxAge: 900000, httpOnly: true });
             if (yield (0, user_services_1.checkAdmin)(req.body.username)) {

@@ -32,6 +32,13 @@ const routerWeb = (app) => {
     app.get("/admin/delete-news/:slug", Authentication_1.Authentication, Authentication_1.Authorization, news_admin_controller_2.deleteNews);
     // <+==================== News====================+>
     app.get("/admin/list-comments", Authentication_1.Authentication, Authentication_1.Authorization, comments_admin_controller_1.listComments);
+    app.post("/admin/list-comments", Authentication_1.Authentication, Authentication_1.Authorization, comments_admin_controller_1.listCommentsDelete);
     app.get("/admin/list-users", Authentication_1.Authentication, Authentication_1.Authorization, users_admin_controller_1.listUsers);
+    app.post("/changeStatus", Authentication_1.Authentication, Authentication_1.Authorization, users_admin_controller_1.changeStatusC);
+    app.post("/changeRole", Authentication_1.Authentication, Authentication_1.Authorization, users_admin_controller_1.changeRoleC);
+    app.get("/Logout", (req, res) => {
+        res.clearCookie('token');
+        res.redirect('/login');
+    });
 };
 exports.default = routerWeb;

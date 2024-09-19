@@ -14,6 +14,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.createComments = createComments;
 exports.loadCommentsDetailNews = loadCommentsDetailNews;
+exports.loadAllComment = loadAllComment;
+exports.deleteComments = deleteComments;
 const comments_model_1 = __importDefault(require("../models/comments-model"));
 function createComments(data) {
     return __awaiter(this, void 0, void 0, function* () {
@@ -33,6 +35,28 @@ function loadCommentsDetailNews(newsId) {
         }
         catch (err) {
             console.error('Error loading comments:', err);
+            throw err;
+        }
+    });
+}
+function loadAllComment() {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            return yield comments_model_1.default.find({}).populate('users').populate('news');
+        }
+        catch (err) {
+            console.error('Error loading comments:', err);
+            throw err;
+        }
+    });
+}
+function deleteComments(id) {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            return yield comments_model_1.default.deleteOne({ _id: id });
+        }
+        catch (err) {
+            console.error('Error deleting comments:', err);
             throw err;
         }
     });

@@ -10,8 +10,20 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.listComments = listComments;
+exports.listCommentsDelete = listCommentsDelete;
+const comments_services_1 = require("../../services/comments-services");
 function listComments(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
-        res.render('admin/comment-list-admin');
+        var listComment = yield (0, comments_services_1.loadAllComment)();
+        console.log(listComment);
+        res.render('admin/comment-list-admin', { listComment });
+    });
+}
+function listCommentsDelete(req, res) {
+    return __awaiter(this, void 0, void 0, function* () {
+        let idComment = req.body.id;
+        if (yield (0, comments_services_1.deleteComments)(idComment)) {
+            res.redirect('/admin/list-comments');
+        }
     });
 }

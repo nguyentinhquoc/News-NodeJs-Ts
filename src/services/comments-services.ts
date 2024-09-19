@@ -16,4 +16,20 @@ async function loadCommentsDetailNews(newsId: object): Promise<any> {
     throw err;
   }
 }
-export { createComments, loadCommentsDetailNews };
+async function loadAllComment(): Promise<any> {
+  try {
+    return await Comment.find({}).populate('users').populate('news');
+  } catch (err) {
+    console.error('Error loading comments:', err);
+    throw err;
+  }
+}
+async function deleteComments(id: string): Promise<any> {
+  try {
+    return await Comment.deleteOne({ _id: id });
+  } catch (err) {
+    console.error('Error deleting comments:', err);
+    throw err;
+  }
+}
+export { createComments, loadCommentsDetailNews, loadAllComment, deleteComments };

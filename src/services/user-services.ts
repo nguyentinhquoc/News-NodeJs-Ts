@@ -60,4 +60,24 @@ async function loadObjIdUsers(username: string): Promise<any> {
     throw err;
   }
 }
-export { allUsers, oneUsers, createUser, checkDataRegister, checkDataLogin, checkAdmin, loadObjIdUsers };
+async function changeStatus(username: string): Promise<any> {
+  let user = await users.findOne({ username: username })
+  if (user?.status == 1) {
+    await users.updateOne({ username }, { status: 0 });
+  } else {
+    await users.updateOne({ username }, { status: 1 });
+  }
+}
+async function changeRole(username: string): Promise<any> {
+  let user = await users.findOne({ username: username })
+  if (user?.admin == 1) {
+    await users.updateOne({ username }, { admin: 0 });
+  } else {
+    await users.updateOne({ username }, { admin: 1 });
+  }
+}
+
+export {
+  allUsers, oneUsers, createUser, checkDataRegister, checkDataLogin, checkAdmin, loadObjIdUsers, changeStatus,
+  changeRole
+};

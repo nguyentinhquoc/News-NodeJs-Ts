@@ -8,7 +8,7 @@ async function loginGet(req: Request, res: Response) {
     res.render("login");
 }
 async function loginPost(req: Request, res: Response) {
-    if (await checkDataLogin([{ username: req.body.username }, { password: req.body.password }])) {
+    if (await checkDataLogin([{ username: req.body.username }, { password: req.body.password }, { status: 1 }])) {
         let token = createToken({ username: req.body.username });
         res.cookie('token', token, { maxAge: 900000, httpOnly: true });
         if ( await checkAdmin(req.body.username)) {

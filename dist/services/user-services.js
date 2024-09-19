@@ -19,6 +19,8 @@ exports.checkDataRegister = checkDataRegister;
 exports.checkDataLogin = checkDataLogin;
 exports.checkAdmin = checkAdmin;
 exports.loadObjIdUsers = loadObjIdUsers;
+exports.changeStatus = changeStatus;
+exports.changeRole = changeRole;
 const users_model_1 = __importDefault(require("../models/users-model"));
 function allUsers() {
     return __awaiter(this, void 0, void 0, function* () {
@@ -99,6 +101,28 @@ function loadObjIdUsers(username) {
         catch (err) {
             console.error('Error creating users:', err);
             throw err;
+        }
+    });
+}
+function changeStatus(username) {
+    return __awaiter(this, void 0, void 0, function* () {
+        let user = yield users_model_1.default.findOne({ username: username });
+        if ((user === null || user === void 0 ? void 0 : user.status) == 1) {
+            yield users_model_1.default.updateOne({ username }, { status: 0 });
+        }
+        else {
+            yield users_model_1.default.updateOne({ username }, { status: 1 });
+        }
+    });
+}
+function changeRole(username) {
+    return __awaiter(this, void 0, void 0, function* () {
+        let user = yield users_model_1.default.findOne({ username: username });
+        if ((user === null || user === void 0 ? void 0 : user.admin) == 1) {
+            yield users_model_1.default.updateOne({ username }, { admin: 0 });
+        }
+        else {
+            yield users_model_1.default.updateOne({ username }, { admin: 1 });
         }
     });
 }

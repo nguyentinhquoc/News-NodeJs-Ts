@@ -2,8 +2,8 @@ import { Express } from 'express';
 import { homeUser } from "../controllers/user/home-controller";
 import { detailNews, addComments } from "../controllers/user/detail-controller";
 import { loginGet, loginPost, registerGet, registerPost } from "../controllers/account-controller";
-import { listUsers } from '../controllers/admin/users-admin-controller';
-import { listComments } from '../controllers/admin/comments-admin-controller';
+import { listUsers, changeStatusC, changeRoleC } from '../controllers/admin/users-admin-controller';
+import { listComments, listCommentsDelete } from '../controllers/admin/comments-admin-controller';
 import { listNews } from '../controllers/admin/news-admin-controller';
 import { formatDateTime } from '../untils/function-local';
 import { addNewsGet, addNewsPost, editNewsGet, editNewsPost, deleteNews } from '../controllers/admin/news-admin-controller';
@@ -31,6 +31,13 @@ const routerWeb = (app: Express) => {
     app.get("/admin/delete-news/:slug", Authentication, Authorization, deleteNews);
     // <+==================== News====================+>
     app.get("/admin/list-comments", Authentication, Authorization, listComments);
+    app.post("/admin/list-comments", Authentication, Authorization, listCommentsDelete);
     app.get("/admin/list-users", Authentication, Authorization, listUsers);
+    app.post("/changeStatus", Authentication, Authorization, changeStatusC);
+    app.post("/changeRole", Authentication, Authorization, changeRoleC);
+    app.get("/Logout", (req, res) => {
+        res.clearCookie('token');
+        res.redirect('/login');
+    });
 };
 export default routerWeb;
