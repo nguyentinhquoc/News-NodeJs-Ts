@@ -22,6 +22,7 @@ const routerWeb = (app) => {
     app.post("/register", account_controller_1.registerPost);
     //? <+====================account====================+>
     app.get("/detail/:slug", Authentication_1.Authentication, detail_controller_1.detailNews);
+    app.post("/detail/:slug", Authentication_1.Authentication, detail_controller_1.addComments);
     app.get("/admin/list-news", Authentication_1.Authentication, Authentication_1.Authorization, news_admin_controller_1.listNews);
     //? <+====================Admin News====================+>
     app.get("/admin/add-news", Authentication_1.Authentication, Authentication_1.Authorization, news_admin_controller_2.addNewsGet);

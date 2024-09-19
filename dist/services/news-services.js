@@ -17,6 +17,7 @@ exports.oneNews = oneNews;
 exports.createNews = createNews;
 exports.editNews = editNews;
 exports.removeNews = removeNews;
+exports.loadObjIdNews = loadObjIdNews;
 const news_model_1 = __importDefault(require("./../models/news-model"));
 function allNews() {
     return __awaiter(this, void 0, void 0, function* () {
@@ -67,6 +68,18 @@ function removeNews(slug) {
         try {
             const newsItem = yield news_model_1.default.deleteOne({ slug });
             return newsItem;
+        }
+        catch (err) {
+            console.error('Error creating news:', err);
+            throw err;
+        }
+    });
+}
+function loadObjIdNews(slug) {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            const newsItem = yield news_model_1.default.findOne({ slug: slug });
+            return newsItem === null || newsItem === void 0 ? void 0 : newsItem._id;
         }
         catch (err) {
             console.error('Error creating news:', err);

@@ -11,7 +11,7 @@
     <main>
       <div class="container">
         <section class="news-detail">
-          <img src="<%= newsResult.image %>" alt="News Image"/>
+          <img src="<%= newsResult.image %>" alt="News Image" />
           <h2><%= newsResult.title %></h2>
           <div class="meta">
             <span>By Author PandaNews</span> |
@@ -37,13 +37,15 @@
               <p>Cảm ơn tác giả vì bài viết chi tiết.</p>
             </div>
           </div>
-          <div class="comment-form">
-            <textarea
-              rows="4"
-              placeholder="Viết bình luận của bạn..."
-            ></textarea>
-            <button type="submit">Gửi</button>
-          </div>
+          <form method="post">
+            <div class="comment-form">
+              <textarea name="comment"
+                rows="4"
+                placeholder="Viết bình luận của bạn..."
+              ></textarea>
+              <button type="submit">Gửi</button>
+            </div>
+          </form>
         </section>
       </div>
     </main>

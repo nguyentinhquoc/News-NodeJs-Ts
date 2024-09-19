@@ -51,4 +51,13 @@ async function checkAdmin(userName: string): Promise<boolean> {
     throw new Error('Lỗi err' + err);
   }
 }
-export { allUsers, oneUsers, createUser, checkDataRegister, checkDataLogin, checkAdmin };
+async function loadObjIdUsers(username: string): Promise<any> {
+  try {
+    const usersItem = await users.findOne({ username: username });
+    return usersItem?._id;
+  } catch (err) {
+    console.error('Error creating users:', err);
+    throw err;
+  }
+}
+export { allUsers, oneUsers, createUser, checkDataRegister, checkDataLogin, checkAdmin, loadObjIdUsers };

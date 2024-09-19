@@ -40,4 +40,13 @@ async function removeNews(slug: string): Promise<any> {
         throw err;
     }
 }
-export { allNews, oneNews, createNews, editNews, removeNews };
+async function loadObjIdNews(slug: string): Promise<any> {
+    try {
+        const newsItem = await news.findOne({ slug: slug });
+        return newsItem?._id;
+    } catch (err) {
+        console.error('Error creating news:', err);
+        throw err;
+    }
+}
+export { allNews, oneNews, createNews, editNews, removeNews, loadObjIdNews };

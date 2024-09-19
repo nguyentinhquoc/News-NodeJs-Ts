@@ -18,6 +18,7 @@ exports.createUser = createUser;
 exports.checkDataRegister = checkDataRegister;
 exports.checkDataLogin = checkDataLogin;
 exports.checkAdmin = checkAdmin;
+exports.loadObjIdUsers = loadObjIdUsers;
 const users_model_1 = __importDefault(require("../models/users-model"));
 function allUsers() {
     return __awaiter(this, void 0, void 0, function* () {
@@ -86,6 +87,18 @@ function checkAdmin(userName) {
         }
         catch (err) {
             throw new Error('Lỗi err' + err);
+        }
+    });
+}
+function loadObjIdUsers(username) {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            const usersItem = yield users_model_1.default.findOne({ username: username });
+            return usersItem === null || usersItem === void 0 ? void 0 : usersItem._id;
+        }
+        catch (err) {
+            console.error('Error creating users:', err);
+            throw err;
         }
     });
 }

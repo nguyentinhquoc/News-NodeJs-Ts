@@ -10,12 +10,32 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.detailNews = detailNews;
+exports.addComments = addComments;
 const news_services_1 = require("../../services/news-services");
+const comments_services_1 = require("../../services/comments-services");
+const Authentication_1 = require("../../middleware/Authentication");
+const news_services_2 = require("../../services/news-services");
+const user_services_1 = require("../../services/user-services");
 function detailNews(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         yield (0, news_services_1.oneNews)(req.params.slug)
             .then((newsResult) => {
             res.render("user/detail-news", { newsResult });
+        }).catch((err) => {
+            console.log(err);
+        });
+    });
+}
+function addComments(req, res) {
+    return __awaiter(this, void 0, void 0, function* () {
+        let username = (0, Authentication_1.verifyToken)(req.cookies.token).username;
+        let comment = req.body.comment;
+        let ObjIdNews = (0, news_services_2.loadObjIdNews)(req.params.slug);
+        let ObjIdUser = (0, user_services_1.loadObjIdUsers)(username);
+        Promise.all([ObjIdNews, ObjIdUser])
+            .then(([news, users]) => {
+            (0, comments_services_1.createComments)({ comment: comment, users: users, news: news });
+            res.redirect(`/detail/${req.params.slug}`);
         }).catch((err) => {
             console.log(err);
         });

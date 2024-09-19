@@ -1,6 +1,6 @@
 import { Express } from 'express';
 import { homeUser } from "../controllers/user/home-controller";
-import { detailNews } from "../controllers/user/detail-controller";
+import { detailNews, addComments } from "../controllers/user/detail-controller";
 import { loginGet, loginPost, registerGet, registerPost } from "../controllers/account-controller";
 import { listUsers } from '../controllers/admin/users-admin-controller';
 import { listComments } from '../controllers/admin/comments-admin-controller';
@@ -21,6 +21,7 @@ const routerWeb = (app: Express) => {
     app.post("/register", registerPost);
     //? <+====================account====================+>
     app.get("/detail/:slug", Authentication, detailNews);
+    app.post("/detail/:slug", Authentication, addComments);
     app.get("/admin/list-news", Authentication, Authorization, listNews);
     //? <+====================Admin News====================+>
     app.get("/admin/add-news", Authentication, Authorization, addNewsGet);
