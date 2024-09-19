@@ -10,6 +10,14 @@ body {
     margin: 0 auto;
 }
 
+.MenuCha {
+    width: 150px;
+}
+
+.MenuCha li:hover {
+    background-color: rgb(249, 114, 181);
+}
+
 header {
     background-color: #007BFF;
     color: white;

@@ -9,15 +9,50 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.login = login;
-exports.register = register;
-function login(req, res) {
+exports.loginGet = loginGet;
+exports.registerGet = registerGet;
+exports.registerPost = registerPost;
+exports.loginPost = loginPost;
+const user_services_1 = require("../services/user-services");
+const Authentication_1 = require("../middleware/Authentication");
+// Add the following line to declare the module
+function loginGet(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         res.render("login");
     });
 }
-function register(req, res) {
+function loginPost(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
-        res.render("register");
+        if (yield (0, user_services_1.checkDataLogin)([{ username: req.body.username }, { password: req.body.password }])) {
+            let token = (0, Authentication_1.createToken)({ username: req.body.username });
+            res.cookie('token', token, { maxAge: 900000, httpOnly: true });
+            if (yield (0, user_services_1.checkAdmin)(req.body.username)) {
+                res.redirect("/admin/list-news");
+            }
+            else {
+                res.redirect("/");
+            }
+        }
+    });
+}
+function registerGet(req, res) {
+    return __awaiter(this, void 0, void 0, function* () {
+        res.render("register", {
+            message: "",
+        });
+    });
+}
+function registerPost(req, res, next) {
+    return __awaiter(this, void 0, void 0, function* () {
+        if (yield (0, user_services_1.checkDataRegister)([{ email: req.body.email }, { username: req.body.username }])) {
+            (0, user_services_1.createUser)(req.body);
+            res.redirect("/login");
+        }
+        else {
+            res.render("register", {
+                message: "Email hoặc tên đăng nhập đã tồn tại",
+            });
+            next();
+        }
     });
 }

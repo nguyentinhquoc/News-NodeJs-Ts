@@ -4,14 +4,14 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>News Website</title>
-    <link rel="stylesheet" href="style/user/detail.css" />
+    <link rel="stylesheet" href="/style/user/detail.css" />
   </head>
   <body>
     <%- include('layout/header-user') -%>
     <main>
       <div class="container">
         <section class="news-detail">
-          <img src="images/<%= newsResult.image %>" alt="News Image"/>
+          <img src="<%= newsResult.image %>" alt="News Image"/>
           <h2><%= newsResult.title %></h2>
           <div class="meta">
             <span>By Author PandaNews</span> |

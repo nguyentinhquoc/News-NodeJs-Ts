@@ -1,7 +1,7 @@
 import e from "express";
-var slug = require('mongoose-slug-generator');
+const slugUpdater = require('mongoose-slug-updater');
 import mongoose, { Schema } from "mongoose";
-mongoose.plugin(slug);
+mongoose.plugin(slugUpdater);
 const news = new Schema({
   title: { type: String },
   content: { type: String },

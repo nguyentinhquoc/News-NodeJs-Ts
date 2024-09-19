@@ -14,21 +14,21 @@ const storageAvatar = multer_1.default.diskStorage({
         cb(null, Date.now() + '.jpg');
     }
 });
+const uploadAvatar = (0, multer_1.default)({
+    storage: storageAvatar
+});
+exports.uploadAvatar = uploadAvatar;
 // Cấu hình lưu trữ cho sản phẩm
-const storageProduct = multer_1.default.diskStorage({
+const storageNews = multer_1.default.diskStorage({
     destination: function (req, file, cb) {
-        cb(null, 'src/public/images');
+        cb(null, 'src/public/images/news');
     },
     filename: function (req, file, cb) {
         cb(null, Date.now() + '.jpg');
     }
 });
 // Tạo các middleware upload
-const uploadAvatar = (0, multer_1.default)({
-    storage: storageAvatar
-});
-exports.uploadAvatar = uploadAvatar;
 const uploadNews = (0, multer_1.default)({
-    storage: storageProduct
+    storage: storageNews
 });
 exports.uploadNews = uploadNews;

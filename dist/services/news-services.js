@@ -14,6 +14,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.allNews = allNews;
 exports.oneNews = oneNews;
+exports.createNews = createNews;
+exports.editNews = editNews;
+exports.removeNews = removeNews;
 const news_model_1 = __importDefault(require("./../models/news-model"));
 function allNews() {
     return __awaiter(this, void 0, void 0, function* () {
@@ -32,6 +35,42 @@ function oneNews(slug) {
         }
         catch (err) {
             throw new Error('Lỗi err' + err);
+        }
+    });
+}
+function createNews(data) {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            const newsItem = yield news_model_1.default.create(data);
+            return newsItem;
+        }
+        catch (err) {
+            console.error('Error creating news:', err);
+            throw err;
+        }
+    });
+}
+function editNews(data, slug) {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            const newsItem = yield news_model_1.default.updateOne({ slug }, data);
+            return newsItem;
+        }
+        catch (err) {
+            console.error('Error creating news:', err);
+            throw err;
+        }
+    });
+}
+function removeNews(slug) {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            const newsItem = yield news_model_1.default.deleteOne({ slug });
+            return newsItem;
+        }
+        catch (err) {
+            console.error('Error creating news:', err);
+            throw err;
         }
     });
 }

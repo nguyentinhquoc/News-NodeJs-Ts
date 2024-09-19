@@ -12,9 +12,9 @@
       <div class="container">
         <section class="other-news">
           <% data.forEach(function(news){ %>
-          <a href="<%=news.slug%>" style="text-decoration: none;" >
+          <a href="/detail/<%=news.slug%>" style="text-decoration: none;" >
             <article>
-              <img src="/images/<%=news.image %>" alt="Other News 1" />
+              <img src="<%=news.image %>" alt="Other News 1" />
               <h3><%= news.title %></h3>
               <h3><%= news.slug %></h3>
               <p><%= news.content %></p>

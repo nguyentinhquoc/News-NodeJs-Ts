@@ -12,6 +12,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.listUsers = listUsers;
 function listUsers(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
-        res.render('admin/account-list-admin');
+        res.render('admin/user-list-admin');
     });
 }

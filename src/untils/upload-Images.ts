@@ -9,10 +9,13 @@ const storageAvatar = multer.diskStorage({
         cb(null, Date.now() + '.jpg');
     }
 });
+const uploadAvatar = multer({
+    storage: storageAvatar
+});
 // Cấu hình lưu trữ cho sản phẩm
-const storageProduct = multer.diskStorage({
+const storageNews = multer.diskStorage({
     destination: function (req, file, cb) {
-        cb(null, 'src/public/images');
+        cb(null, 'src/public/images/news');
     },
     filename: function (req, file, cb) {
         cb(null, Date.now() + '.jpg');
@@ -20,11 +23,9 @@ const storageProduct = multer.diskStorage({
 });
 
 // Tạo các middleware upload
-const uploadAvatar = multer({
-    storage: storageAvatar
-});
+
 const uploadNews = multer({
-    storage: storageProduct
+    storage: storageNews
 });
 // Export các middleware
 export {

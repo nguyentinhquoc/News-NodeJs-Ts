@@ -23,9 +23,9 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var slug = require('mongoose-slug-generator');
+const slugUpdater = require('mongoose-slug-updater');
 const mongoose_1 = __importStar(require("mongoose"));
-mongoose_1.default.plugin(slug);
+mongoose_1.default.plugin(slugUpdater);
 const news = new mongoose_1.Schema({
     title: { type: String },
     content: { type: String },

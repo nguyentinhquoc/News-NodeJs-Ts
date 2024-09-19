@@ -13,4 +13,31 @@ async function oneNews(slug: string): Promise<any> {
         throw new Error('Lỗi err' + err);
     }
 }
-export { allNews, oneNews };
+async function createNews(data: object): Promise<any> {
+    try {
+        const newsItem = await news.create(data);
+        return newsItem;
+    } catch (err) {
+        console.error('Error creating news:', err);
+        throw err;
+    }
+}
+async function editNews(data: object, slug: string): Promise<any> {
+    try {
+        const newsItem = await news.updateOne({ slug }, data);
+        return newsItem;
+    } catch (err) {
+        console.error('Error creating news:', err);
+        throw err;
+    }
+}
+async function removeNews(slug: string): Promise<any> {
+    try {
+        const newsItem = await news.deleteOne({slug});
+        return newsItem;
+    } catch (err) {
+        console.error('Error creating news:', err);
+        throw err;
+    }
+}
+export { allNews, oneNews, createNews, editNews, removeNews };

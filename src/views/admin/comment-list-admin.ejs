@@ -1,122 +1,146 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Admin - Product Management</title>
-    <style>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin - Product Management</title>
+  <style>
       body {
-        font-family: Arial, sans-serif;
-        margin: 0;
-        padding: 0;
-        background-color: #f0f8ff; /* Light blue background */
+          font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+          margin: 0;
+          padding: 0;
+          background-color: #e6f3ff;
+          color: #333;
       }
       header {
-        background-color: #1e90ff; /* Dodger blue */
-        color: white;
-        padding: 1em;
-        text-align: center;
+          background-color: #1e90ff;
+          color: white;
+          padding: 1.5em;
+          text-align: center;
+          box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
       }
       nav a {
-        color: white;
-        margin: 0 1em;
-        text-decoration: none;
+          color: white;
+          margin: 0 1em;
+          text-decoration: none;
+          font-weight: bold;
+          transition: color 0.3s ease;
+      }
+      nav a:hover {
+          color: #f0f8ff;
       }
       main {
-        padding: 1em;
+          padding: 2em;
+          max-width: 1200px;
+          margin: 0 auto;
       }
       h2 {
-        color: #1e90ff; /* Dodger blue */
+          color: #1e90ff;
+          text-align: center;
+          font-size: 2em;
+          margin-bottom: 1em;
       }
       table {
-        width: 100%;
-        border-collapse: collapse;
-        margin-top: 1em;
+          width: 100%;
+          border-collapse: separate;
+          border-spacing: 0;
+          margin-top: 1em;
+          background-color: white;
+          border-radius: 10px;
+          overflow: hidden;
+          box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
       }
-      table,
-      th,
-      td {
-        border: 1px solid #1e90ff; /* Dodger blue */
-      }
-      th,
-      td {
-        padding: 0.5em;
-        text-align: left;
+      th, td {
+          padding: 1em;
+          text-align: left;
+          border-bottom: 1px solid #e0e0e0;
       }
       th {
-        background-color: #1e90ff; /* Dodger blue */
-        color: white;
+          background-color: #1e90ff;
+          color: white;
+          font-weight: bold;
+          text-transform: uppercase;
+      }
+      tr:last-child td {
+          border-bottom: none;
       }
       tr:nth-child(even) {
-        background-color: #e6f7ff; /* Light blue for even rows */
+          background-color: #f8fbff;
       }
       .btn {
-        border: none;
-        padding: 0.5em 1em;
-        cursor: pointer;
-        color: white;
+          border: none;
+          padding: 0.7em 1.2em;
+          cursor: pointer;
+          color: white;
+          font-weight: bold;
+          border-radius: 5px;
+          transition: background-color 0.3s ease, transform 0.2s ease;
+      }
+      .btn:hover {
+          transform: translateY(-2px);
       }
       .btn-add {
-        background-color: #1e90ff; /* Dodger blue */
-        float: right;
-        margin-bottom: 1em;
+          background-color: #1e90ff;
+          float: right;
+          margin-bottom: 1em;
       }
       .btn-add:hover {
-        background-color: #1c86ee; /* Slightly darker blue */
+          background-color: #1c86ee;
       }
       .btn-edit {
-        background-color: #32cd32; /* Lime green */
+          background-color: #32cd32;
+          margin-right: 0.5em;
       }
       .btn-edit:hover {
-        background-color: #2eb82e; /* Slightly darker green */
+          background-color: #2eb82e;
       }
       .btn-delete {
-        background-color: #ff4500; /* Orange red */
+          background-color: #ff4500;
       }
       .btn-delete:hover {
-        background-color: #e03e00; /* Slightly darker red */
+          background-color: #e03e00;
       }
-    </style>
-  </head>
-  <body>
-    <%- include('layout/header-admin') -%>
-    <main>
+  </style>
+</head>
+<body>
+  <%- include('layout/header-admin') -%>
+  <main>
       <section id="admin">
-        <h2>Comment List</h2>
-        <button class="btn btn-add">Add New</button>
-        <table>
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Price</th>
-              <th>Description</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Product 1</td>
-              <td>$100</td>
-              <td>Description for product 1</td>
-              <td>
-                <button class="btn btn-edit">Edit</button>
-                <button class="btn btn-delete">Delete</button>
-              </td>
-            </tr>
-            <tr>
-              <td>Product 2</td>
-              <td>$200</td>
-              <td>Description for product 2</td>
-              <td>
-                <button class="btn btn-edit">Edit</button>
-                <button class="btn btn-delete">Delete</button>
-              </td>
-            </tr>
-            <!-- Add more product rows as needed -->
-          </tbody>
-        </table>
+          <h2>Comments List</h2>
+          <button class="btn btn-add">Add New</button>
+          <table>
+              <thead>
+                  <tr>
+                      <th>Name</th>
+                      <th>Price</th>
+                      <th>Description</th>
+                      <th>Actions</th>
+                  </tr>
+              </thead>
+              <tbody>
+                  <tr>
+                      <td>Product 1</td>
+                      <td>$100</td>
+                      <td>Description for product 1</td>
+                      <td>
+                          <button class="btn btn-edit">Edit</button>
+                          <button class="btn btn-delete">Delete</button>
+                      </td>
+                  </tr>
+                  <tr>
+                      <td>Product 2</td>
+                      <td>$200</td>
+                      <td>Description for product 2</td>
+                      <td>
+                          <button class="btn btn-edit">Edit</button>
+                          <button class="btn btn-delete">Delete</button>
+                      </td>
+                  </tr>
+                  <!-- Add more product rows as needed -->
+              </tbody>
+          </table>
       </section>
-    </main>
-    <%- include('layout/footer-admin') -%>
-  </body>
+  </main>
+  <%- include('layout/footer-admin') -%>
+</body>
 </html>
