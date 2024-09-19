@@ -33,17 +33,17 @@ async function editNews(data: object, slug: string): Promise<any> {
 }
 async function removeNews(slug: string): Promise<any> {
     try {
-        const newsItem = await news.deleteOne({slug});
+        const newsItem = await news.deleteOne({ slug });
         return newsItem;
     } catch (err) {
         console.error('Error creating news:', err);
         throw err;
     }
 }
-async function loadObjIdNews(slug: string): Promise<any> {
+async function loadObjIdNews(slug: string) {
     try {
-        const newsItem = await news.findOne({ slug: slug });
-        return newsItem?._id;
+        const usersItem = await news.findOne({ slug: slug })
+        return usersItem?._id;
     } catch (err) {
         console.error('Error creating news:', err);
         throw err;

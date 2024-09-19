@@ -16,14 +16,25 @@ const comments_services_1 = require("../../services/comments-services");
 const Authentication_1 = require("../../middleware/Authentication");
 const news_services_2 = require("../../services/news-services");
 const user_services_1 = require("../../services/user-services");
+const comments_services_2 = require("../../services/comments-services");
 function detailNews(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
-        yield (0, news_services_1.oneNews)(req.params.slug)
-            .then((newsResult) => {
-            res.render("user/detail-news", { newsResult });
-        }).catch((err) => {
-            console.log(err);
-        });
+        try {
+            const result = yield (0, news_services_2.loadObjIdNews)(req.params.slug);
+            if (result) {
+                const comment = yield (0, comments_services_2.loadCommentsDetailNews)(result);
+                const newsResult = yield (0, news_services_1.oneNews)(req.params.slug);
+                console.log(comment);
+                res.render("user/detail-news", { newsResult, comment });
+            }
+            else {
+                res.status(404).send('News not found');
+            }
+        }
+        catch (err) {
+            console.error('Error:', err);
+            res.status(500).send('Internal Server Error');
+        }
     });
 }
 function addComments(req, res) {

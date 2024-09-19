@@ -8,4 +8,12 @@ async function createComments(data: object): Promise<any> {
     throw err;
   }
 }
-export { createComments };
+async function loadCommentsDetailNews(newsId: object): Promise<any> {
+  try {
+    return await Comment.find({ news: newsId }).populate('users');
+  } catch (err) {
+    console.error('Error loading comments:', err);
+    throw err;
+  }
+}
+export { createComments, loadCommentsDetailNews };

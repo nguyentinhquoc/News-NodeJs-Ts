@@ -78,8 +78,8 @@ function removeNews(slug) {
 function loadObjIdNews(slug) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            const newsItem = yield news_model_1.default.findOne({ slug: slug });
-            return newsItem === null || newsItem === void 0 ? void 0 : newsItem._id;
+            const usersItem = yield news_model_1.default.findOne({ slug: slug });
+            return usersItem === null || usersItem === void 0 ? void 0 : usersItem._id;
         }
         catch (err) {
             console.error('Error creating news:', err);

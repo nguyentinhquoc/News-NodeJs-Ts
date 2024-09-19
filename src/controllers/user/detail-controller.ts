@@ -5,14 +5,23 @@ import { createComments } from "../../services/comments-services";
 import { verifyToken } from "../../middleware/Authentication";
 import { loadObjIdNews } from "../../services/news-services";
 import { loadObjIdUsers } from "../../services/user-services";
-
+import { loadCommentsDetailNews } from "../../services/comments-services";
 async function detailNews(req: Request, res: Response) {
-    await oneNews(req.params.slug)
-        .then((newsResult) => {
-            res.render("user/detail-news", { newsResult });
-        }).catch((err) => {
-            console.log(err);
-        });
+    try {
+        const result = await loadObjIdNews(req.params.slug);
+        if (result) {
+            const comment = await loadCommentsDetailNews(result);
+            const newsResult = await oneNews(req.params.slug);
+            console.log(comment);
+
+            res.render("user/detail-news", { newsResult, comment });
+        } else {
+            res.status(404).send('News not found');
+        }
+    } catch (err) {
+        console.error('Error:', err);
+        res.status(500).send('Internal Server Error');
+    }
 }
 async function addComments(req: Request, res: Response) {
     let username = verifyToken(req.cookies.token).username

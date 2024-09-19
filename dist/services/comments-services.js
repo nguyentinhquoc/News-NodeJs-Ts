@@ -13,6 +13,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.createComments = createComments;
+exports.loadCommentsDetailNews = loadCommentsDetailNews;
 const comments_model_1 = __importDefault(require("../models/comments-model"));
 function createComments(data) {
     return __awaiter(this, void 0, void 0, function* () {
@@ -21,6 +22,17 @@ function createComments(data) {
         }
         catch (err) {
             console.error('Error creating comments:', err);
+            throw err;
+        }
+    });
+}
+function loadCommentsDetailNews(newsId) {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            return yield comments_model_1.default.find({ news: newsId }).populate('users');
+        }
+        catch (err) {
+            console.error('Error loading comments:', err);
             throw err;
         }
     });
