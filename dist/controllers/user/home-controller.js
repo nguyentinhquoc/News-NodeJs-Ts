@@ -14,9 +14,11 @@ const news_services_1 = require("../../services/news-services");
 function homeUser(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         yield (0, news_services_1.allNews)()
-            .then((data) => {
-            res.render('user/home', { data });
-        }).catch((err) => {
+            .then(data => {
+            console.log(data);
+            res.status(200).json({ data });
+        })
+            .catch(err => {
             res.send(err);
         });
     });

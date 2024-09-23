@@ -16,18 +16,30 @@ const user_services_1 = require("../../services/user-services");
 function listUsers(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         let user = yield (0, user_services_1.allUsers)();
-        res.render('admin/user-list-admin', { user });
+        res.status(200).json({ user });
     });
 }
 function changeStatusC(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
-        (0, user_services_1.changeStatus)(req.body.username);
-        res.redirect('/admin/list-users');
+        try {
+            yield (0, user_services_1.changeStatus)(req.body.username);
+            return res.status(200).json({ message: 'Status changed successfully' });
+        }
+        catch (error) {
+            console.error(error);
+            return res.status(500).json({ message: 'Internal server error' });
+        }
     });
 }
 function changeRoleC(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
-        (0, user_services_1.changeRole)(req.body.username);
-        res.redirect('/admin/list-users');
+        try {
+            yield (0, user_services_1.changeRole)(req.body.username);
+            return res.status(200).json({ message: 'Role changed successfully' });
+        }
+        catch (error) {
+            console.error(error);
+            return res.status(500).json({ message: 'Internal server error' });
+        }
     });
 }

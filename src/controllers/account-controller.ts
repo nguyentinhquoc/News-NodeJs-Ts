@@ -1,37 +1,69 @@
-import { Request, Response } from 'express';
-import { createUser, checkDataRegister, checkDataLogin, checkAdmin } from '../services/user-services';
-import { createToken } from '../middleware/Authentication';
-import cookieParser from 'cookie-parser';
+import { Request, Response } from 'express'
+import {
+  createUser,
+  checkDataRegister,
+  checkDataLogin,
+  checkAdmin
+} from '../services/user-services'
+import { createToken } from '../middleware/Authentication'
+import cookieParser from 'cookie-parser'
 
 // Add the following line to declare the module
-async function loginGet(req: Request, res: Response) {
-    res.render("login");
+async function loginGet (req: Request, res: Response) {
+  return res.status(200).json({ message: 'Render login page' })
 }
-async function loginPost(req: Request, res: Response) {
-    if (await checkDataLogin([{ username: req.body.username }, { password: req.body.password }, { status: 1 }])) {
-        let token = createToken({ username: req.body.username });
-        res.cookie('token', token, { maxAge: 900000, httpOnly: true });
-        if ( await checkAdmin(req.body.username)) {
-            res.redirect("/admin/list-news");
-        } else{
-            res.redirect("/");
-        }
-    }
-}
-async function registerGet(req: Request, res: Response) {
-    res.render("register", {
-        message: "",
-    });
-}
-async function registerPost(req: Request, res: Response, next: Function) {
-    if (await checkDataRegister([{ email: req.body.email }, { username: req.body.username }])) {
-        createUser(req.body);
-        res.redirect("/login");
+
+async function loginPost (req: Request, res: Response) {
+  try {
+    const { username, password } = req.body
+    const isValidLogin = await checkDataLogin([
+      { username },
+      { password },
+      { status: 1 }
+    ])
+    if (isValidLogin) {
+      const token = createToken({ username })
+      res.cookie('token', token, { maxAge: 900000, httpOnly: true })
+      const isAdmin = await checkAdmin(username)
+      if (isAdmin) {
+        return res
+          .status(200)
+          .json({ message: 'Login successful', redirect: '/admin/list-news' })
+      } else {
+        return res
+          .status(200)
+          .json({ message: 'Login successful', redirect: '/' })
+      }
     } else {
-        res.render("register", {
-            message: "Email hoặc tên đăng nhập đã tồn tại",
-        });
-        next();
+      return res.status(401).json({ message: 'Invalid login credentials' })
     }
+  } catch (error) {
+    return res.status(500).json({ message: 'Internal server error' })
+  }
 }
-export { loginGet, registerGet, registerPost, loginPost };
+
+async function registerGet (req: Request, res: Response) {
+  res.status(200).json({ message: 'Render Register page' })
+}
+async function registerPost (req: Request, res: Response, next: Function) {
+  try {
+    if (
+      await checkDataRegister([
+        { email: req.body.email },
+        { username: req.body.username }
+      ])
+    ) {
+      createUser(req.body)
+      return res
+        .status(200)
+        .json({ message: 'User registered successfully. Please log in.' })
+    } else {
+      return res
+        .status(409)
+        .json({ message: '.Email or username already exists.' })
+    }
+  } catch (error) {
+    return res.status(500).json({ message: 'Internal server error' })
+  }
+}
+export { loginGet, registerGet, registerPost, loginPost }

@@ -14,29 +14,29 @@ const routerWeb = (app) => {
         res.locals.formatDateTime = function_local_1.formatDateTime;
         next();
     });
-    app.get("/", Authentication_1.Authentication, home_controller_1.homeUser);
+    app.get('/', Authentication_1.Authentication, home_controller_1.homeUser);
     //? <+====================account====================+>
-    app.get("/login", account_controller_1.loginGet);
-    app.post("/login", account_controller_1.loginPost);
-    app.get("/register", account_controller_1.registerGet);
-    app.post("/register", account_controller_1.registerPost);
+    app.get('/login', account_controller_1.loginGet);
+    app.post('/login', account_controller_1.loginPost);
+    app.get('/register', account_controller_1.registerGet);
+    app.post('/register', account_controller_1.registerPost);
     //? <+====================account====================+>
-    app.get("/detail/:slug", Authentication_1.Authentication, detail_controller_1.detailNews);
-    app.post("/detail/:slug", Authentication_1.Authentication, detail_controller_1.addComments);
-    app.get("/admin/list-news", Authentication_1.Authentication, Authentication_1.Authorization, news_admin_controller_1.listNews);
+    app.get('/detail/:slug', Authentication_1.Authentication, detail_controller_1.detailNews);
+    app.post('/detail/:slug', Authentication_1.Authentication, detail_controller_1.addComments);
+    app.get('/admin/list-news', Authentication_1.Authentication, Authentication_1.Authorization, news_admin_controller_1.listNews);
     //? <+====================Admin News====================+>
-    app.get("/admin/add-news", Authentication_1.Authentication, Authentication_1.Authorization, news_admin_controller_2.addNewsGet);
-    app.post("/admin/add-news", Authentication_1.Authentication, Authentication_1.Authorization, news_admin_controller_2.addNewsPost);
-    app.get("/admin/edit-news/:slug", Authentication_1.Authentication, Authentication_1.Authorization, news_admin_controller_2.editNewsGet);
-    app.post("/admin/edit-news/:slug", Authentication_1.Authentication, Authentication_1.Authorization, news_admin_controller_2.editNewsPost);
-    app.get("/admin/delete-news/:slug", Authentication_1.Authentication, Authentication_1.Authorization, news_admin_controller_2.deleteNews);
+    app.get('/admin/add-news', Authentication_1.Authentication, Authentication_1.Authorization, news_admin_controller_2.addNewsGet);
+    app.post('/admin/add-news', Authentication_1.Authentication, Authentication_1.Authorization, news_admin_controller_2.addNewsPost);
+    app.get('/admin/edit-news/:slug', Authentication_1.Authentication, Authentication_1.Authorization, news_admin_controller_2.editNewsGet);
+    app.put('/admin/edit-news/:slug', Authentication_1.Authentication, Authentication_1.Authorization, news_admin_controller_2.editNewsPost);
+    app.delete('/admin/delete-news/:slug', Authentication_1.Authentication, Authentication_1.Authorization, news_admin_controller_2.deleteNews);
     // <+==================== News====================+>
-    app.get("/admin/list-comments", Authentication_1.Authentication, Authentication_1.Authorization, comments_admin_controller_1.listComments);
-    app.post("/admin/list-comments", Authentication_1.Authentication, Authentication_1.Authorization, comments_admin_controller_1.listCommentsDelete);
-    app.get("/admin/list-users", Authentication_1.Authentication, Authentication_1.Authorization, users_admin_controller_1.listUsers);
-    app.post("/changeStatus", Authentication_1.Authentication, Authentication_1.Authorization, users_admin_controller_1.changeStatusC);
-    app.post("/changeRole", Authentication_1.Authentication, Authentication_1.Authorization, users_admin_controller_1.changeRoleC);
-    app.get("/Logout", (req, res) => {
+    app.get('/admin/list-comments', Authentication_1.Authentication, Authentication_1.Authorization, comments_admin_controller_1.listComments);
+    app.delete('/admin/list-comments', Authentication_1.Authentication, Authentication_1.Authorization, comments_admin_controller_1.listCommentsDelete);
+    app.get('/admin/list-users', Authentication_1.Authentication, Authentication_1.Authorization, users_admin_controller_1.listUsers);
+    app.put('/changeStatus', Authentication_1.Authentication, Authentication_1.Authorization, users_admin_controller_1.changeStatusC);
+    app.put('/changeRole', Authentication_1.Authentication, Authentication_1.Authorization, users_admin_controller_1.changeRoleC);
+    app.post('/Logout', (req, res) => {
         res.clearCookie('token');
         res.redirect('/login');
     });

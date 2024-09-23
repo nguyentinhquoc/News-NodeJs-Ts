@@ -18,41 +18,67 @@ const Authentication_1 = require("../middleware/Authentication");
 // Add the following line to declare the module
 function loginGet(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
-        res.render("login");
+        return res.status(200).json({ message: 'Render login page' });
     });
 }
 function loginPost(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
-        if (yield (0, user_services_1.checkDataLogin)([{ username: req.body.username }, { password: req.body.password }, { status: 1 }])) {
-            let token = (0, Authentication_1.createToken)({ username: req.body.username });
-            res.cookie('token', token, { maxAge: 900000, httpOnly: true });
-            if (yield (0, user_services_1.checkAdmin)(req.body.username)) {
-                res.redirect("/admin/list-news");
+        try {
+            const { username, password } = req.body;
+            const isValidLogin = yield (0, user_services_1.checkDataLogin)([
+                { username },
+                { password },
+                { status: 1 }
+            ]);
+            if (isValidLogin) {
+                const token = (0, Authentication_1.createToken)({ username });
+                res.cookie('token', token, { maxAge: 900000, httpOnly: true });
+                const isAdmin = yield (0, user_services_1.checkAdmin)(username);
+                if (isAdmin) {
+                    return res
+                        .status(200)
+                        .json({ message: 'Login successful', redirect: '/admin/list-news' });
+                }
+                else {
+                    return res
+                        .status(200)
+                        .json({ message: 'Login successful', redirect: '/' });
+                }
             }
             else {
-                res.redirect("/");
+                return res.status(401).json({ message: 'Invalid login credentials' });
             }
+        }
+        catch (error) {
+            return res.status(500).json({ message: 'Internal server error' });
         }
     });
 }
 function registerGet(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
-        res.render("register", {
-            message: "",
-        });
+        res.status(200).json({ message: 'Render Register page' });
     });
 }
 function registerPost(req, res, next) {
     return __awaiter(this, void 0, void 0, function* () {
-        if (yield (0, user_services_1.checkDataRegister)([{ email: req.body.email }, { username: req.body.username }])) {
-            (0, user_services_1.createUser)(req.body);
-            res.redirect("/login");
+        try {
+            if (yield (0, user_services_1.checkDataRegister)([
+                { email: req.body.email },
+                { username: req.body.username }
+            ])) {
+                (0, user_services_1.createUser)(req.body);
+                return res
+                    .status(200)
+                    .json({ message: 'User registered successfully. Please log in.' });
+            }
+            else {
+                return res
+                    .status(409)
+                    .json({ message: '.Email or username already exists.' });
+            }
         }
-        else {
-            res.render("register", {
-                message: "Email hoặc tên đăng nhập đã tồn tại",
-            });
-            next();
+        catch (error) {
+            return res.status(500).json({ message: 'Internal server error' });
         }
     });
 }

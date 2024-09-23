@@ -19,31 +19,31 @@ const news_services_1 = require("../../services/news-services");
 const upload_Images_1 = require("../../untils/upload-Images");
 function deleteNews(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
-        yield (0, news_services_1.removeNews)(req.params.slug)
-            .then((listNews) => {
-            res.redirect('/admin/list-news');
-        }).catch((err) => {
-            // <+====================ERROR====================+>
-            console.log(err);
-            // <+====================ERROR====================+>
-        });
+        try {
+            yield (0, news_services_1.removeNews)(req.params.slug);
+            return res.status(200).json({ message: 'News deleted successfully' });
+        }
+        catch (error) {
+            console.error(error);
+            return res.status(500).json({ message: 'Internal server error' });
+        }
     });
 }
 function listNews(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
-        yield (0, news_services_1.allNews)()
-            .then((listNews) => {
-            res.render('admin/news-list-admin', { listNews });
-        }).catch((err) => {
-            // <+====================ERROR====================+>
-            console.log(err);
-            // <+====================ERROR====================+>
-        });
+        try {
+            const listNews = yield (0, news_services_1.allNews)();
+            return res.status(200).json({ listNews });
+        }
+        catch (error) {
+            console.error(error);
+            return res.status(500).json({ message: 'Internal server error' });
+        }
     });
 }
 function addNewsGet(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
-        res.render('admin/news-add-admin');
+        return res.status(200).json({ message: 'Render add news page' });
     });
 }
 function addNewsPost(req, res) {
@@ -52,17 +52,23 @@ function addNewsPost(req, res) {
             return __awaiter(this, void 0, void 0, function* () {
                 if (err) {
                     console.error('Error uploading image:', err);
-                    return res.status(500).send('Error uploading image');
+                    return res.status(500).json({ message: 'Error uploading image' });
                 }
                 if (req.file) {
                     const image = req.file.path.substring(req.file.path.indexOf('\\images'));
                     const { title, content } = req.body;
-                    yield (0, news_services_1.createNews)({ image, title, content });
-                    res.redirect('/admin/list-news');
+                    try {
+                        yield (0, news_services_1.createNews)({ image, title, content });
+                        return res.status(201).json({ message: 'News added successfully' });
+                    }
+                    catch (error) {
+                        console.error('Error creating news:', error);
+                        return res.status(500).json({ message: 'Error creating news' });
+                    }
                 }
                 else {
                     console.log('No file uploaded');
-                    res.status(400).send('No file uploaded');
+                    return res.status(400).json({ message: 'No file uploaded' });
                 }
             });
         });
@@ -70,14 +76,14 @@ function addNewsPost(req, res) {
 }
 function editNewsGet(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
-        yield (0, news_services_1.oneNews)(req.params.slug)
-            .then((valueNews) => {
-            res.render('admin/news-edit-admin', { valueNews });
-        }).catch((err) => {
-            // <+====================ERROR====================+>
-            console.log(err);
-            // <+====================ERROR====================+>
-        });
+        try {
+            const valueNews = yield (0, news_services_1.oneNews)(req.params.slug);
+            return res.status(200).json({ valueNews });
+        }
+        catch (error) {
+            console.error(error);
+            return res.status(500).json({ message: 'Internal server error' });
+        }
     });
 }
 function editNewsPost(req, res) {
@@ -89,16 +95,21 @@ function editNewsPost(req, res) {
                 const slug = req.params.slug;
                 if (err) {
                     console.error('Error uploading image:', err);
-                    return res.status(500).send('Error uploading image');
+                    return res.status(500).json({ message: 'Error uploading image' });
                 }
-                if (req.file) {
-                    const image = req.file.path.substring(req.file.path.indexOf('\\images'));
-                    yield (0, news_services_1.editNews)({ image, title, content, dateEdit }, slug);
-                    res.redirect('/admin/list-news');
+                try {
+                    if (req.file) {
+                        const image = req.file.path.substring(req.file.path.indexOf('\\images'));
+                        yield (0, news_services_1.editNews)({ image, title, content, dateEdit }, slug);
+                    }
+                    else {
+                        yield (0, news_services_1.editNews)({ title, content, dateEdit }, slug);
+                    }
+                    return res.status(200).json({ message: 'News edited successfully' });
                 }
-                else {
-                    yield (0, news_services_1.editNews)({ title, content, dateEdit }, slug);
-                    res.redirect('/admin/list-news');
+                catch (error) {
+                    console.error('Error editing news:', error);
+                    return res.status(500).json({ message: 'Error editing news' });
                 }
             });
         });

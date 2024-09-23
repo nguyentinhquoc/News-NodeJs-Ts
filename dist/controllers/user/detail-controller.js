@@ -24,8 +24,7 @@ function detailNews(req, res) {
             if (result) {
                 const comment = yield (0, comments_services_2.loadCommentsDetailNews)(result);
                 const newsResult = yield (0, news_services_1.oneNews)(req.params.slug);
-                console.log(comment);
-                res.render("user/detail-news", { newsResult, comment });
+                res.status(200).json({ newsResult, comment });
             }
             else {
                 res.status(404).send('News not found');
@@ -46,9 +45,12 @@ function addComments(req, res) {
         Promise.all([ObjIdNews, ObjIdUser])
             .then(([news, users]) => {
             (0, comments_services_1.createComments)({ comment: comment, users: users, news: news });
-            res.redirect(`/detail/${req.params.slug}`);
-        }).catch((err) => {
-            console.log(err);
+            return res
+                .status(201)
+                .json({ message: 'Comment added successfully', news: req.params.slug });
+        })
+            .catch(err => {
+            return res.status(500).json({ message: err });
         });
     });
 }
